@@ -1,0 +1,9 @@
+{
+	"name": "dfactorypro",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "c4617816-af49-4188-97f7-f31797e286e0",
+		"tenantId": "26d241f1-b8fa-40da-8eae-f223184f56e2"
+	}
+}
