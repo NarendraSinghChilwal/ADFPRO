@@ -1,4 +1,4 @@
-# ADFPRO
+<img width="1219" height="781" alt="image" src="https://github.com/user-attachments/assets/49fc4cb2-f0fd-4677-bf21-0ea563d602c8" /># ADFPRO
 
 **ADFPRO** is a modular Azure Data Factory project designed to demonstrate real-world data engineering practices using fully parameterized and metadata-driven pipelines.
 
@@ -23,6 +23,8 @@ The goal of this repository is to build and version-control a complete ADF solut
 
 The **Ingestion** pipeline automates dynamic data ingestion into **Azure Data Lake Storage Gen2**, supporting both full and incremental (CDC) loads through metadata-driven control.
 
+![Ingestion Pipeline](Images/ingestion_pipeline.png)
+
 ### Flow Overview
 1. **Lookup (last_cdc)** – Fetches the last processed CDC or watermark value.  
 2. **Script (Total_Count)** – Runs a SQL query to get the latest CDC value or record count.  
@@ -42,4 +44,21 @@ The **Ingestion** pipeline automates dynamic data ingestion into **Azure Data La
 - Uses metadata tables for CDC tracking.  
 - Integrates easily with the **Scheduled** orchestration pipeline.
 
-![Ingestion Pipeline](Images/ingestion_pipeline.png)
+## 🔁 Router Pipeline
+
+
+
+The **Router** pipeline serves as the central controller for all data ingestion workflows.  
+It dynamically validates, enumerates, routes, and cleans up files using a fully metadata-driven design.
+
+![Router Pipeline](Images/router_pipeline.png)
+
+### Flow Overview
+1. **Validation** – Confirms that the source path and configuration are valid before execution.  
+2. **Get Metadata** – Extracts metadata (e.g., file names, folder hierarchy) from the defined container.  
+3. **ForEach (ForEachFile)** – Iterates over each file returned from the metadata activity using:  
+   ```text
+   @activity('Get Metadata1').output.childItems
+   Inside the loop, a SwitchFile activity determines the processing logic based on file type or source name.
+4. **Delete** - Cleans up successfully processed files from the source container to maintain a clean workspace.
+
