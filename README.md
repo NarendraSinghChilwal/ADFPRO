@@ -42,4 +42,4 @@ The **Ingestion** pipeline automates dynamic data ingestion into **Azure Data La
 - Uses metadata tables for CDC tracking.  
 - Integrates easily with the **Scheduled** orchestration pipeline.
 
-![Ingestion Pipeline](images/ingestion_pipeline.png)
+![Ingestion Pipeline](Images/ingestion_pipeline.png)
