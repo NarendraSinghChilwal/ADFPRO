@@ -61,3 +61,62 @@ It dynamically validates, enumerates, routes, and cleans up files using a fully 
    Inside the loop, a SwitchFile activity determines the processing logic based on file type or source name.
 4. **Delete** - Cleans up successfully processed files from the source container to maintain a clean workspace.
 
+## 🧮 Delta Lake Pipeline
+
+The **Delta Lake** pipeline forms the transformation and curation layer of the data engineering workflow.  
+It executes a **Mapping Data Flow** (`dataflow1`) that transforms raw ingested data into optimized Delta tables ready for analytics.
+
+![Delta Lake Pipeline](Images/delta_pipeline.png)
+
+### Flow Overview
+1. **Source:** Imports data dynamically from the `ds_csv_dynamic` dataset.  
+2. **UpperState:** Cleans and standardizes fields like `city`, `state`, `country`, and `timestamp`.  
+3. **SelectCols:** Renames and filters key columns for downstream consumption.  
+4. **AlterRow:** Applies conditional logic to modify or upsert rows.  
+5. **SinkDelta:** Writes curated data into **Delta format** in ADLS Gen2 for efficient querying and analytics.
+
+### Highlights
+- Demonstrates end-to-end ELT transformations using **ADF Mapping Data Flows**.  
+- Converts raw CSV data into optimized Delta tables with schema consistency.  
+- Acts as the curated layer in the modern data lake architecture.  
+- Fully integrated with the **Router** and **Ingestion** pipelines for orchestrated execution.
+
+
+## 🕒 Scheduled Pipeline
+
+The **Scheduled** pipeline manages the orchestration and automation layer of the project.  
+It executes key pipelines such as *Ingestion* and *Router* on defined schedules and triggers alert notifications via a **Web activity** once execution completes.  
+Parameters for schema, table, and backdate values make it reusable across multiple datasets.
+
+**Highlights**
+- Automates pipeline execution using triggers.  
+- Integrates with webhooks or Logic Apps for real-time alerts.  
+- Supports parameterized execution of dependent pipelines.
+
+---
+
+## 🧩 Schema Pipeline
+
+The **Schema** pipeline validates and enforces data structure consistency before ingestion.  
+It retrieves metadata through a **Get Metadata** activity, then iterates through schema definitions in a **ForEach** loop to ensure each dataset aligns with its expected structure.  
+The validation step prevents downstream errors caused by column drift or mismatched data types.
+
+**Highlights**
+- Enforces schema integrity for multiple tables.  
+- Uses metadata-driven configuration for dynamic schema mapping.  
+- Performs pre-ingestion validation to maintain data quality.
+
+---
+
+## 🌐 REST API Pipeline
+
+The **REST API** pipeline ingests external data through HTTP endpoints and integrates it into the data lake.  
+A **Web activity** fetches data from a REST endpoint, and a **Copy Data** activity writes the response into Azure Data Lake in a structured format for further transformation.  
+This allows combining internal and external data sources into a unified analytics layer.
+
+**Highlights**
+- Handles REST API connections and pagination.  
+- Copies data directly into ADLS Gen2 for downstream processing.  
+- Fully parameterized for dynamic endpoints and authentication headers.
+
+
