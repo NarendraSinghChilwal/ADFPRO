@@ -1,4 +1,3 @@
-<img width="1219" height="781" alt="image" src="https://github.com/user-attachments/assets/49fc4cb2-f0fd-4677-bf21-0ea563d602c8" /># ADFPRO
 
 **ADFPRO** is a modular Azure Data Factory project designed to demonstrate real-world data engineering practices using fully parameterized and metadata-driven pipelines.
 
